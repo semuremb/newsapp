@@ -1,0 +1,27 @@
+<html>
+	<body>
+		<div id = "home" onmouseenter = "highlight(this, 'red')" onmouseout = "dehighlight(this)" onclick = "toHome()">Home</div>
+		<h1 id = "title">Articles</h1>
+		
+		<table id = "articletable">
+		
+		</table>
+		
+		<link rel = "stylesheet" href = "/client/primarynews.css">
+		<script src = "/client/navigation.js"></script>
+		<script src = "/client/billdisplay.js"></script>
+		<script src = "/client/article.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+		<script>
+			var socket = io();
+			document.getElementById('articletable').innerHTML = '';
+			socket.emit('getarticledata');
+			socket.on('article', function(data) {
+				console.log(data.date);
+				console.log(data.info);
+				initializeTable('article');
+				showArticles('article', data);
+			});
+		</script>
+	</body>
+<html>

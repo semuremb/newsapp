@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<link rel="apple-touch-icon" sizes="180x180" href="/client/pics/icons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/client/pics/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/client/pics/icons/favicon-16x16.png">
+		<link rel="manifest" href="/client/pics/icons/site.webmanifest">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+	</head>
+	<body>
+		<table id = "headads">
+			<tr id = "headadrow">
+				<th class = "headad" id = "headad1">
+					<div class = "headadcontainer">a</div>
+				</th>
+				<th class = "centerhead">
+					<h1 id = "title"><img id = "thelogo" src = "/client/pics/logo.png"></h1>
+						<div class = "inline" id = "about" onmouseenter = "highlight(this, 'red')" onmouseout = "dehighlight(this)" onclick = "toAbout()">About</div>
+						<div class = "inline" id = "select" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)" onclick = "toggleCategories()">The Scoop</div>
+						<div class = "inline" id = "articles" onmouseenter = "highlight(this, 'blue')" onmouseout = "dehighlight(this)" onclick = "toArticleGetter()">Articles</div>
+					<br>
+					<div id = "thecategories">
+						<div class = "categories" id = "gethousebills" onclick = "getData('house')" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)">U.S. House Bills</div>
+						<div class = "categories" id = "getsenatebills" onclick = "getData('senate')" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)">U.S. Senate Bills</div>
+						<div class = "categories" id = "getappealscourtcases" onclick = "getData('appealscourt')" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)">U.S. Appeals Court Cases</div>
+						<div class = "categories" id = "gethouselobby" onclick = "getData('houselobby')" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)">U.S. House Lobby</div>
+						<div class = "categories" id = "getsenatelobby" onclick = "getData('senatelobby')" onmouseenter = "highlight(this, 'green')" onmouseout = "dehighlight(this)">U.S. Senate Lobby</div>
+					</div>
+				</th>
+				<th class = "headad" id = "headad2">
+					<div class = "headadcontainer">a</div>
+				</th>
+			</tr>
+		</table>
+		
+		<table class = "whole">
+			<tr class = "content">
+				<th class = "ad" id = "ad1">
+					<div class = "adcontainer">a</div>
+				</th>
+				
+				<th class = "contentcell">
+					<table class = "main" id = "housetable">
+					
+					</table>
+					
+					<table class = "main" id = "senatetable">
+					
+					</table>
+					
+					<table class = "main" id = "appealscourttable">
+					
+					</table>
+					
+					<table class = "main" id = "houselobbytable">
+					
+					</table>
+					
+					<table class = "main" id = "senatelobbytable">
+					
+					</table>
+				</th>
+				
+				<th class = "ad" id = "ad2">
+					<div class = "adcontainer" id = "a1">a</div>
+				</th>
+			</tr>
+		</table>
+		
+		<div id = "mobilead"></div>
+		
+	</body>
+	<link rel = "stylesheet" href = "/client/primarynews.css">
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+	<link rel = "stylesheet" href = "/client/primarynews.css">
+	<script src = "/client/billdisplay.js"></script>
+	<script src = "/client/navigation.js"></script>
+	<script>
+		var socket = io();
+		var allbills = [];
+		var compressed = [];
+		var expanded = [];
+		
+		var billstylesheet = '<link rel = "stylesheet" href = "https://www.congress.gov/css/cache/3191bc5d249a98cd228776a5244b2c34.css">';
+	
+		socket.on('sendbill', function(data) {
+			addInfoToTable(data.type, data.billdata);
+		});
+		
+		socket.on('casedata', function(data) {
+			addInfoToTable(data.type, data.casedata);
+		});
+		
+		socket.on('lobbyists', function(data) {
+			addLobbyistsToTable(data.type, data.lobbyists);
+		});
+	</script>
+</html>
